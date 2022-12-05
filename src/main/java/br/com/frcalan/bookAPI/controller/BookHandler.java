@@ -30,12 +30,12 @@ public class BookHandler {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(service.findById(id), Book.class);
     }
-    public Mono<ServerResponse> updateBook(ServerRequest request) {
+    public Mono<ServerResponse> update(ServerRequest request) {
         String id = request.pathVariable("id");
         final Mono<Book> book = request.bodyToMono(Book.class);
         return ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(fromPublisher(book.flatMap((Book bookUpdate) -> service.updateBook(id, bookUpdate)), Book.class));
+                .body(fromPublisher(book.flatMap(service::update), Book.class));
     }
     public Mono<ServerResponse> save(ServerRequest request) {
         final Mono<Book> book = request.bodyToMono(Book.class);

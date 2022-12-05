@@ -22,22 +22,11 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Mono<Book> updateBook(String id,  Book book){
-        return bookRepository.findById(id)
-                .flatMap(dbBook -> {
-                    dbBook.setTitulo(book.getTitulo());
-                    dbBook.setAutor(book.getAutor());
-                    dbBook.setImgUrl(book.getImgUrl());
-                    dbBook.setLoja(book.getLoja());
-                    dbBook.setValor(book.getValor());
-                    dbBook.setData(book.getData());
-                    dbBook.setDataCompra(book.getDataCompra());
-                    dbBook.setStatus(book.isStatus());
-                    dbBook.setSituacao(book.isSituacao());
-                    return bookRepository.save(dbBook);
-                });
+    public Mono<Book> update(Book book){
+        return findById(book.getId())
+                .map(bookFound -> book.withId(bookFound.getId()))
+                .flatMap(bookRepository::save);
     }
-
     @Override
     public Mono<Book> save(Book book) {
         return bookRepository.save(book);

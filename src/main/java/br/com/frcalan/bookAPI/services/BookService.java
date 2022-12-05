@@ -8,7 +8,7 @@ public interface BookService {
 
     Flux<Book> findAll();
     Mono<Book> findById(String id);
-    Mono<Book> updateBook(String id, Book book);
+    Mono<Book> update(Book book);
     Mono<Book> save(Book book);
     Mono<Void> delete(String id);
 }
